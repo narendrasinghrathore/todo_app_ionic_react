@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
     IonList,
 } from '@ionic/react';
@@ -9,49 +9,40 @@ interface ITodoList {
     list: TodoListItemModel[]
 }
 
-class TodoList extends Component<ITodoList, ITodoList> {
+export default function TodoList(props: { list: TodoListItemModel[], updateList: Function }) {
 
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            list: props.list
-        };
-    }
 
     /**
      * Will return a list of TodoListItem(s)
      */
-    buildList = () => {
-        return this.state.list.map(
-            (data: TodoListItemModel) =>
-                <TodoListItem
-                    key={data.id}
-                    item={data}
-                    onFavorite={this.toggleFavoriteState} />);
+    const buildList = () => {
+        return props.list.map((data: TodoListItemModel) =>
+            <TodoListItem
+                key={data.id}
+                item={data}
+                onFavorite={toggleFavoriteState} />);
     }
 
     /**
      * Toggle the favorite property
      */
-    toggleFavoriteState = (item: TodoListItemModel) => {
-        const list = this.state.list.map(item_ => item_.id === item.id ? (() => {
+    const toggleFavoriteState = (item: TodoListItemModel) => {
+        const list = props.list.map(item_ => item_.id === item.id ? (() => {
             return { ...item_, isFavorite: !item_.isFavorite };
 
         })() : item_);
-        this.setState({
-            list
-        });
+
+        props.updateList(list);
     }
     /**
      * Render List
      */
-    render() {
-        return (
-            <IonList>
-                {this.buildList()}
-            </IonList>
-        );
-    }
+
+    return (
+        <IonList>
+            {buildList()}
+        </IonList>
+    );
+
 
 }
-export default TodoList;

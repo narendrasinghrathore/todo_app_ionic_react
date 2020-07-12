@@ -6,6 +6,8 @@ import {
 } from '@ionic/react';
 import { TodoListItemModel } from '../../../models/TodoListItem';
 
+import { iosSquareOutline, mdCheckboxOutline } from 'ionicons/icons';
+
 interface ITodoListItemModel {
     item: TodoListItemModel,
     onFavorite: Function
@@ -20,7 +22,7 @@ class TodoListItem extends Component<ITodoListItemModel, ITodoListItemModel> {
                     {this.props.item.name}
                 </IonLabel>
                 {this.props.item.isFavorite ?
-                    <IonIcon name="heart" slot="end" ></IonIcon> : <IonIcon name="heart-empty"></IonIcon>}
+                    <IonIcon icon={mdCheckboxOutline} ></IonIcon> : <IonIcon icon={iosSquareOutline}></IonIcon>}
             </IonItem>
         );
     }
